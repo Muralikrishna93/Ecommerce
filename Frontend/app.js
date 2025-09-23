@@ -1,9 +1,18 @@
+
+// click logo to go to home page
+const logo = document.querySelector(".logo");
+logo.addEventListener("click", () => {
+    window.location.href = "index.html"; 
+});
+
+
 // Active state
 const filterButtons = document.querySelectorAll(".filter-btn");
 
 filterButtons.forEach(button => {
     button.addEventListener("click", () => {
-        document.querySelector(".filter-btn.active").classList.remove("active");
+        let activeButton = document.querySelector(".filter-btn.active");
+        activeButton.classList.remove("active");
         button.classList.add("active");
     });
 });
@@ -68,6 +77,13 @@ filterButtons.forEach(button => {
 });
 
 fetchProducts();
+
+
+
+
+
+
+
 
 
 

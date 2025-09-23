@@ -30,6 +30,13 @@ header {
     color: #222;
 }
 
+/* when i click on logo it should take me to home page */
+.logo:hover {
+    color: #555;
+    cursor: pointer;
+}   
+
+
 .nav-links {
     display: flex;
     gap: 20px;
@@ -192,5 +199,8 @@ header {
   background: #333;
   color: #fff;
 }
+
+
+
 
 
