@@ -1,4 +1,3 @@
-
 // click logo to go to home page
 const logo = document.querySelector(".logo");
 logo.addEventListener("click", () => {
@@ -77,6 +76,7 @@ filterButtons.forEach(button => {
 });
 
 fetchProducts();
+
 
 
 
