@@ -52,6 +52,21 @@ function displayProducts(products) {
   });
 }
 
+
+// filter products by category
+filterButtons.forEach(button => {
+    button.addEventListener("click", () => {
+        const category = button.getAttribute("data-category");  
+        if (category === "all") {
+            displayProducts(allProducts);
+        }
+        else {
+            const filteredProducts = allProducts.filter(product => product.category === category);
+            displayProducts(filteredProducts);
+        }   
+    });
+});
+
 fetchProducts();
 
 

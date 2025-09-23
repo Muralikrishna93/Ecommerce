@@ -71,6 +71,7 @@ header {
     align-items: center;
     color: #fff;
     padding: 30px;
+    /* display: none; */
 }
 
 .hero h2 {
