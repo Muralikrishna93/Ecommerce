@@ -1,7 +1,7 @@
 // click logo to go to home page
 const logo = document.querySelector(".logo");
 logo.addEventListener("click", () => {
-    window.location.href = "index.html"; 
+  window.location.href = "index.html";
 });
 
 
@@ -9,11 +9,11 @@ logo.addEventListener("click", () => {
 const filterButtons = document.querySelectorAll(".filter-btn");
 
 filterButtons.forEach(button => {
-    button.addEventListener("click", () => {
-        let activeButton = document.querySelector(".filter-btn.active");
-        activeButton.classList.remove("active");
-        button.classList.add("active");
-    });
+  button.addEventListener("click", () => {
+    let activeButton = document.querySelector(".filter-btn.active");
+    activeButton.classList.remove("active");
+    button.classList.add("active");
+  });
 });
 
 
@@ -52,9 +52,14 @@ function displayProducts(products) {
       <div class="price">$ ${product.price.toFixed(2)}</div>
       <div class="card-buttons">
         <button>Details</button>
-        <button>Add to Cart</button>
+        <button class="add-cart-btn">Add to Cart</button>
       </div>
     `;
+
+    // Adding event listener for "Add to Cart"
+    card.querySelector(".add-cart-btn").addEventListener("click", () => {
+      addToCart(product);
+    });
 
     productsContainer.appendChild(card);
   });
@@ -63,19 +68,49 @@ function displayProducts(products) {
 
 // filter products by category
 filterButtons.forEach(button => {
-    button.addEventListener("click", () => {
-        const category = button.getAttribute("data-category");  
-        if (category === "all") {
-            displayProducts(allProducts);
-        }
-        else {
-            const filteredProducts = allProducts.filter(product => product.category === category);
-            displayProducts(filteredProducts);
-        }   
-    });
+  button.addEventListener("click", () => {
+    const category = button.getAttribute("data-category");
+    if (category === "all") {
+      displayProducts(allProducts);
+    }
+    else {
+      const filteredProducts = allProducts.filter(product => product.category === category);
+      displayProducts(filteredProducts);
+    }
+  });
 });
 
 fetchProducts();
+
+
+let cart = JSON.parse(localStorage.getItem("cart")) || [];
+
+// Updating cart count in navbar
+function updateCartCount() {
+  const countElement = document.getElementById("cart-count");
+  let totalItems = cart.reduce((sum, item) => sum + item.quantity, 0);
+  countElement.textContent = totalItems;
+}
+updateCartCount();
+
+// Adding products to cart
+function addToCart(product) {
+  let existing = cart.find(item => item.id === product.id);
+  if (existing) {
+    existing.quantity += 1;
+  } else {
+    cart.push({ ...product, quantity: 1 });
+  }
+  localStorage.setItem("cart", JSON.stringify(cart));
+  updateCartCount();
+}
+
+// Clicking cart to see added products
+let cartbtn = document.getElementById("cart-btn");
+cartbtn.addEventListener("click", () => {
+  window.location.href = "cart.html";
+});
+
 
 
 
