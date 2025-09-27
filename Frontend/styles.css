@@ -30,12 +30,10 @@ header {
     color: #222;
 }
 
-/* when i click on logo it should take me to home page */
 .logo:hover {
     color: #555;
     cursor: pointer;
 }   
-
 
 .nav-links {
     display: flex;
@@ -64,9 +62,16 @@ header {
 }
 
 .btn:hover {
-    background: #333;
+    background: #555;
     color: #fff;
 }
+
+/* Cart button in navbar */
+.nav-buttons a:hover {
+    background: #555;
+    color: rgb(255, 255, 255);
+}
+
 
 /* Hero Section */
 .hero {
@@ -78,7 +83,6 @@ header {
     align-items: center;
     color: #fff;
     padding: 30px;
-    /* display: none; */
 }
 
 .hero h2 {
@@ -124,8 +128,6 @@ header {
     background: #333;
     color: #fff;
 }
-
-
 
 /* products flex */
 
@@ -199,7 +201,6 @@ header {
   background: #333;
   color: #fff;
 }
-
 
 /* Cart Section */
 
@@ -300,11 +301,9 @@ header {
   font-weight: bold;
 }
 
-/* Order Summary styling */
 #order-summary h3 {
   margin-bottom: 15px;
 }
-
 
 /* Cart Button in Navbar */
 

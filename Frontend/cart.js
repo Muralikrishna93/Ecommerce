@@ -1,10 +1,10 @@
 let cart = JSON.parse(localStorage.getItem("cart")) || [];
 
-// Updating navbar cart count
+// Updating navbar cart count (distinct products)
 function updateCartCount() {
     const countElement = document.getElementById("cart-count");
-    let totalItems = cart.reduce((sum, item) => sum + item.quantity, 0);
-    countElement.textContent = totalItems;
+    const uniqueCount = cart ? new Set(cart.map(item => item.id)).size : 0;
+    countElement.textContent = uniqueCount;
 }
 updateCartCount();
 
@@ -20,6 +20,7 @@ function renderCart() {
         cartItems.style.fontWeight = "bold";
         cartItems.style.textAlign = "center";
         orderSummary.innerHTML = "";
+        updateCartCount();
         return;
     }
 
@@ -47,13 +48,12 @@ function renderCart() {
         </div>
     </div>
   `).join("");
-  
 
     // Calculating total cart value
     let productTotal = cart.reduce((sum, item) => sum + item.price * item.quantity, 0);
-
     let shipping = 30;
     let total = productTotal + shipping;
+
     orderSummary.innerHTML = `
     <h3>Order Summary</h3>
     <p>Products (${cart.length}): $${productTotal.toFixed(2)}</p>
@@ -61,12 +61,16 @@ function renderCart() {
     <h4>Total amount: $${total.toFixed(2)}</h4>
     <button class="btn" style="width:100%; margin-top:10px; "> Go to Checkout </button>
   `;
+
+  updateCartCount();
 }
 
 // Change quantity
 function changeQty(id, delta) {
     let item = cart.find(p => p.id === id);
-    if (!item) return;
+    if(!item){
+         return;
+    }
     item.quantity += delta;
     if (item.quantity <= 0) {
         cart = cart.filter(p => p.id !== id);
@@ -79,8 +83,10 @@ function changeQty(id, delta) {
 
 renderCart();
 
-// click logo redirects to home
+// logo to home
 const logo = document.querySelector(".logo");
-logo.addEventListener("click", () => {
-    window.location.href = "index.html";
-});
+if (logo) {
+    logo.addEventListener("click", () => {
+        window.location.href = "index.html";
+    });
+}

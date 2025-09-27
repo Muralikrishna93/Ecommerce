@@ -11,7 +11,9 @@ const filterButtons = document.querySelectorAll(".filter-btn");
 filterButtons.forEach(button => {
   button.addEventListener("click", () => {
     let activeButton = document.querySelector(".filter-btn.active");
-    activeButton.classList.remove("active");
+    if (activeButton) {
+      activeButton.classList.remove("active");
+    }
     button.classList.add("active");
   });
 });
@@ -22,7 +24,7 @@ filterButtons.forEach(button => {
 const productsContainer = document.getElementById("products-container");
 let allProducts = [];
 
-// Fetch products from API
+// Fetching products from API
 async function fetchProducts() {
   try {
     let productUrl = "https://fakestoreapi.com/products";
@@ -35,13 +37,14 @@ async function fetchProducts() {
   }
 }
 
-// Display products
+// Displaying products
 function displayProducts(products) {
   productsContainer.innerHTML = "";
 
   products.forEach(product => {
     const card = document.createElement("div");
     card.classList.add("product-card");
+
     const shortTitle = product.title.length > 15 ? product.title.substring(0, 15) + "..." : product.title;
     const shortDesc = product.description.length > 60 ? product.description.substring(0, 60) + "..." : product.description;
 
@@ -82,14 +85,13 @@ filterButtons.forEach(button => {
 
 fetchProducts();
 
-
 let cart = JSON.parse(localStorage.getItem("cart")) || [];
 
 // Updating cart count in navbar
 function updateCartCount() {
   const countElement = document.getElementById("cart-count");
-  let totalItems = cart.reduce((sum, item) => sum + item.quantity, 0);
-  countElement.textContent = totalItems;
+  const uniqueCount = cart ? new Set(cart.map(item => item.id)).size : 0;
+  countElement.textContent = uniqueCount;
 }
 updateCartCount();
 
@@ -105,20 +107,12 @@ function addToCart(product) {
   updateCartCount();
 }
 
-// Clicking cart to see added products
+// Navigating to cart page on clicking cart button
 let cartbtn = document.getElementById("cart-btn");
-cartbtn.addEventListener("click", () => {
-  window.location.href = "cart.html";
-});
-
-
-
-
-
-
-
-
-
-
-
-
+if (cartbtn) {
+  cartbtn.addEventListener("click", (e) => {
+    if (cartbtn.tagName.toLowerCase() !== 'a') {
+      window.location.href = "cart.html";
+    }
+  });
+}
